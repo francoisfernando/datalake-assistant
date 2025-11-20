@@ -1,0 +1,32 @@
+agent:
+  name: quality_agent
+  description: >
+    Evaluates data quality metrics, Great Expectations results,
+    Soda checks, and other monitoring outputs to provide a structured
+    quality assessment for datasets or columns.
+
+  handlers:
+    - name: fetch_quality_reports
+      description: Retrieve precomputed DQ reports.
+      tools: [quality_tool]
+    - name: compute_light_checks
+      description: Run lightweight on-demand profiling (null %, distinct %, etc.)
+      tools: [athena_tool]
+    - name: assemble_quality_summary
+      description: Compile freshness, anomalies, and rule results.
+
+  tools:
+    - quality_tool
+    - athena_tool
+    - logger_tool
+
+  capabilities:
+    - dq_report_parsing
+    - anomaly_scoring
+    - freshness_evaluation
+    - sample_based_profiling
+
+  policies:
+    allow_heavy_queries: false
+    profiling_row_limit: 50000
+    warn_on_failures: true

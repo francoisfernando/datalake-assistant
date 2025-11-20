@@ -1,0 +1,37 @@
+agent:
+  name: retriever_agent
+  description: >
+    Hybrid retrieval agent combining structured metadata lookup,
+    semantic vector search, and Glue/S3 metadata inspection to
+    retrieve evidence for LLM reasoning.
+
+  handlers:
+    - name: retrieve_metadata
+      description: Retrieve structured metadata from Glue/DDL.
+      tools: [metadata_tool]
+    - name: retrieve_vector
+      description: Perform semantic document search.
+      tools: [vector_search_tool]
+    - name: retrieve_operational
+      description: Fetch Athena query history and S3 update timestamps.
+      tools: [athena_tool, s3_tool]
+    - name: merge_results
+      description: Merge, rank, and filter evidence.
+
+  tools:
+    - metadata_tool
+    - vector_search_tool
+    - athena_tool
+    - s3_tool
+    - docs_tool
+
+  capabilities:
+    - semantic_search
+    - hybrid_retrieval
+    - metadata_enrichment
+    - time_aware_ranking
+
+  policies:
+    require_min_rank_score: 0.25
+    max_results: 25
+    allow_stale_metadata: false

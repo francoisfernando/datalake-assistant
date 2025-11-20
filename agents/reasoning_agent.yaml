@@ -1,0 +1,29 @@
+agent:
+  name: reasoning_agent
+  description: >
+    LLM-based agent that synthesizes retrieved evidence into structured,
+    human-readable answers including reasoning, provenance, and
+    confidence scoring.
+
+  handlers:
+    - name: synthesize_answer
+      description: Generate short answer, explanation, and evidence mapping.
+      model: reasoning_model
+    - name: generate_confidence
+      description: Compute confidence score using transformer logits.
+    - name: enforce_evidence_rules
+      description: Reject answers lacking evidence or containing conflicts.
+
+  tools:
+    - logger_tool
+
+  capabilities:
+    - multi_step_reasoning
+    - evidence_grounding
+    - summarization
+    - confidence_estimation
+
+  policies:
+    hallucination_prevention: strict
+    require_evidence: true
+    max_output_tokens: 700

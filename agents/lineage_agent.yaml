@@ -1,0 +1,28 @@
+agent:
+  name: lineage_agent
+  description: >
+    Lineage tracing agent that walks dataset and column-level
+    lineage graphs to explain derivations and transformation paths.
+
+  handlers:
+    - name: fetch_lineage_graph
+      description: Use lineage_tool to pull upstream and downstream nodes.
+      tools: [lineage_tool]
+    - name: compute_derivation_path
+      description: Multi-hop reasoning across ETL pipelines.
+    - name: simplify_graph
+      description: Collapse trivial nodes and annotate timestamps/owners.
+
+  tools:
+    - lineage_tool
+    - metadata_tool
+    - logger_tool
+
+  capabilities:
+    - graph_query
+    - graph_reasoning
+    - derivation_explanation
+
+  policies:
+    max_lineage_depth: 6
+    require_timestamp_annotations: true

@@ -1,0 +1,32 @@
+agent:
+  name: orchestrator_agent
+  description: >
+    The central ADK coordinator responsible for intent detection,
+    routing queries to specialized agents, enforcing IAM permissions,
+    merging evidence, and assembling final user responses.
+
+  handlers:
+    - name: handle_request
+      description: Perform intent detection and route the request.
+      model: intent_model
+    - name: handle_routing
+      description: Route to Retriever, Lineage, Quality, or Reasoning agents.
+    - name: handle_assemble
+      description: Merge evidence and assemble final response.
+    - name: handle_auth
+      description: Verify IAM access levels using auth_tool.
+
+  tools:
+    - auth_tool
+    - logger_tool
+
+  capabilities:
+    - routing
+    - intent_detection
+    - evidence_aggregation
+    - compliance_enforcement
+
+  policies:
+    require_auth: true
+    require_evidence_for_factual_answers: true
+    max_chain_depth: 4

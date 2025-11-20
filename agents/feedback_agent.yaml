@@ -1,0 +1,27 @@
+agent:
+  name: feedback_agent
+  description: >
+    Learns from user feedback, corrections, and query follow-ups.
+    Re-ranks retrieval and generates training data for continual improvement.
+
+  handlers:
+    - name: capture_feedback
+      description: Store feedback (thumbs up/down, corrections).
+    - name: rank_adjustment
+      description: Adjust retrieval ranking weights.
+      tools: [vector_search_tool]
+    - name: prepare_training_data
+      description: Emit JSONL items for RLHF or fine-tuning pipelines.
+
+  tools:
+    - vector_search_tool
+    - logger_tool
+
+  capabilities:
+    - retrieval_reranking
+    - preference_learning
+    - annotation_generation
+
+  policies:
+    require_user_consent: true
+    log_all_feedback: true
