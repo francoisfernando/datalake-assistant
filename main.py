@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from google.adk.runners import InMemoryRunner
 from agents.root_agent import app
 from logging import basicConfig, DEBUG, INFO, Logger
+from random import choice
 
 basicConfig(level=INFO)
 
@@ -14,10 +15,14 @@ load_dotenv()  # load API keys and settings
 runner = InMemoryRunner(app=app)
 
 
+test_queries = [
+    "When was sales_data dataset last updated?"
+]
+
 async def main():
     try:
         # run_debug() requires ADK Python 1.18 or higher:
-        response = await runner.run_debug("When was sales_data dataset last updated?")
+        response = await runner.run_debug(choice(test_queries))
 
     except Exception as e:
         logger.error("An error occurred during agent execution", exc_info=True)
