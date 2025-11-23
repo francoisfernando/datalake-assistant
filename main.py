@@ -1,21 +1,27 @@
-from fastapi import FastAPI, HTTPException
-from orchestrator_service.orchestrator import Orchestrator
-from orchestrator_service.router import route_to_agent
+import asyncio
+from dotenv import load_dotenv
+from google.adk.runners import InMemoryRunner
+from agents.root_agent import app
+from logging import basicConfig, DEBUG, INFO, Logger
 
-app = FastAPI(title="ADK Multi-Agent Orchestrator")
+basicConfig(level=INFO)
 
-orchestrator = Orchestrator()
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
+logger = Logger("main")
 
-@app.post("/query")
-async def query(payload: dict):
-    if "query" not in payload:
-        raise HTTPException(400, "Missing 'query' field")
+load_dotenv()  # load API keys and settings
+# Set a Runner using the imported application object
+runner = InMemoryRunner(app=app)
 
-    user_query = payload["query"]
-    response = await route_to_agent(orchestrator, user_query)
-    return {"response": response}
 
+async def main():
+    try:
+        # run_debug() requires ADK Python 1.18 or higher:
+        response = await runner.run_debug("When was sales_data dataset last updated?")
+
+    except Exception as e:
+        logger.error("An error occurred during agent execution", exc_info=True)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
