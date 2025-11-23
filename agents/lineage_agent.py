@@ -29,11 +29,15 @@ def get_producing_service(dataset_name: str) -> Dict[str, str]:
         Success: {"status": "success", "service": "service_name", "kafka_topic": "topic_name"}
         Error: {"status": "error", "error_message": "Dataset not found"}
     """
-    # return {
-    #     "status": "error",
-    #     "error_message": f"Dataset '{dataset_name}' not found",
-    # }
+
     logger.info(f"Fetching lineage for dataset: {dataset_name}")
+
+    if dataset_name != "telemetry_data":
+        return {
+            "status": "error",
+            "error_message": f"Dataset '{dataset_name}' not found",
+        }
+    
     return {
         "status": "success",
         "service": "IOT API Integration",

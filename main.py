@@ -16,8 +16,9 @@ runner = InMemoryRunner(app=app)
 
 
 test_queries = [
-    # "When was telemetry_data dataset last updated?",
+    "When was telemetry_data dataset last updated?",
     "Which service produces telemetry_data?",
+    "Which service produces sales_data?",
 ]
 
 async def main():

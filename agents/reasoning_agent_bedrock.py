@@ -54,7 +54,7 @@ Do NOT invent sources or hallucinate facts that are not present in the evidence.
     return prompt.strip()
 
 
-class ReasoningAgent:
+class ReasoningAgentBedrock:
     """
     ReasoningAgent that calls AWS Bedrock (claude sonnet model) via boto3.
 
@@ -181,7 +181,7 @@ class ReasoningAgent:
 # quick local test helper (not invoked automatically)
 if __name__ == "__main__":
     import asyncio
-    ra = ReasoningAgent()
+    ra = ReasoningAgentBedrock()
     sample_evidence = [
         {"source": "glue:db.table1", "snippet": "LastUpdatedTime: 2025-11-12T03:24:00Z"},
         {"source": "quality_report:table1", "snippet": "Null rate for user_id = 0.02"}
