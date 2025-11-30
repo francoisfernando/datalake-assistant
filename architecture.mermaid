@@ -2,15 +2,15 @@ title Multi-Agent data provenance/catalog/quality/trends/lineage tool architectu
 direction right
 typeface clean
 
+
 // Groups and nodes
 User Interfaces [icon: users, color: lightblue] {
   Web Interface [icon: globe, color: lightblue]
-  Slack Bot [icon: message-circle, color: lightblue]
   Command Line Interface [icon: terminal, color: lightblue]
 }
 
 Orchestrator Agent [icon: cpu, color: orange] {
-  Orchestrator [icon: cpu, color: orange]
+  Orchestrator [icon: cpu, color: orange, label: "Orchestrator"]
 }
 
 Multi Agent System [icon: layers, color: lightyellow] {
@@ -26,21 +26,16 @@ Multi Agent System [icon: layers, color: lightyellow] {
   Lineage Agent [icon: git-branch, color: pink] {
     Lineage [icon: git-branch, color: pink]
   }
-  Feedback Agent [icon: refresh-ccw, color: yellow] {
-    Feedback [icon: refresh-ccw, color: yellow]
   }
-}
 
 ADK Tools and Connectors [icon: package, color: lightgrey] {
-  Glue Metadata Tool [icon: database, color: blue]
-  Vector Search Tool [icon: search, color: blue]
+  AWS Data Processing MCP Server [icon: database, color: blue, label: "AWS Data Processing MCP Server"]
   Athena Tool [icon: bar-chart-2, color: blue]
   S3 Tool [icon: server, color: blue]
-  Docs Tool [icon: file-text, color: blue]
+  Docs Tool [icon: file-text, color: blue, label: "RAG Retrieval Tool"]
   Lineage Tool [icon: git-branch, color: pink]
   Data Quality Tool [icon: check-circle, color: green]
-  Auth Tool [icon: lock, color: orange]
-  Logger Tool [icon: file-text, color: orange]
+  Glue Metadata Tool [color: blue, icon: bar-chart-2, label: "Glue Metdata Tool"]
 }
 
 // Relationships
@@ -49,25 +44,21 @@ Orchestrator > Retriever: Route: retrieval
 Orchestrator > Reasoner: Route: reasoning
 Orchestrator > Quality: Route: quality checks
 Orchestrator > Lineage: Route: lineage tracing
-Orchestrator > Feedback: Route: feedback
 
 
 
-Retriever > Glue Metadata Tool
-Retriever > Vector Search Tool
-Retriever > Athena Tool
-Retriever > S3 Tool
+Retriever > AWS Data Processing MCP Server
+AWS Data Processing MCP Server > Athena Tool
+AWS Data Processing MCP Server > S3 Tool
 Retriever > Docs Tool
 
 Quality > Data Quality Tool
 Lineage > Lineage Tool
 
-Orchestrator > Auth Tool
-Orchestrator > Logger Tool
 Orchestrator > User Interfaces: Response
 Orchestrator < Retriever: Evidence (metadata, docs, logs)
 Orchestrator < Quality: Quality report
 Orchestrator < Lineage: Lineage graph and narrative
 Orchestrator < Reasoner: Final synthesized answer, confidence, provenance
-Orchestrator < Feedback: Signals and corrections
 Orchestrator < User Interfaces: User query
+AWS Data Processing MCP Server > Glue Metadata Tool

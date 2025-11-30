@@ -103,6 +103,14 @@ This makes it a long-term strategic asset rather than a static tool.
 ✅ - features which are included in this submission
 
 
+### Architecture
+
+The below diagram shows the high level architecture of the system.
+
+![Architecture diagram](architecture_v2.svg)
+
+
+
 ## Setup and testing
 
 #### Create virual environment and activate it
@@ -123,7 +131,10 @@ python3 main.py
 
 ## How the test dataset was created
 
+In order to do some integration testing we needed some Glue/Athena tables. We used publicly available [Sakila](https://github.com/sakiladb/postgres) database as the starting point for creating the parquet data underlying Glue/Athena tables.
+
 Standup a dockerized sakila postgres instance https://github.com/sakiladb/postgres
+
 database: `sakila`
 username / password: `sakila` / `p_ssW0rd`
 
