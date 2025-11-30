@@ -24,9 +24,12 @@ def create_metadata_tool() -> Optional[MCPToolset]:
                 # },
             ),
 
-            # Read only tools
+            # Limit to specific tools
             tool_filter=[
-                "manage_aws_athena_databases_and_tables"
+                "manage_aws_athena_databases_and_tables",
+                "manage_aws_glue_crawlers",
+                "manage_aws_glue_classifiers",
+                "manage_aws_glue_crawler_management",
             ],
         )
     except Exception:
