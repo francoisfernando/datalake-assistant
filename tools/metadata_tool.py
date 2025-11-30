@@ -10,6 +10,10 @@ from typing import Optional
 # Load environment variables
 load_dotenv()
 
+from logging import getLogger
+
+logger = getLogger(__name__)
+
 
 def create_metadata_tool() -> Optional[MCPToolset]:
     """
@@ -23,7 +27,6 @@ def create_metadata_tool() -> Optional[MCPToolset]:
                 #     "Authorization": "Bearer " + os.getenv("xxx_PERSONAL_ACCESS_TOKEN"),
                 # },
             ),
-
             # Limit to specific tools
             tool_filter=[
                 "manage_aws_athena_databases_and_tables",
@@ -32,13 +35,9 @@ def create_metadata_tool() -> Optional[MCPToolset]:
                 "manage_aws_glue_crawler_management",
             ],
         )
+        logger.info("Created MCPToolset for metadata tool")
     except Exception:
-        # GitHub MCP server not available or token missing
         mcp_tools = None
+        logger.exception("Failed to create MCPToolset for metadata tool")
 
     return mcp_tools
-
-# class MetadataTool:
-#     def fetch_metadata(self, dataset):
-#         return {"dataset": dataset, "columns": ["id", "value"], "last_modified": "2025-05-01"}
-

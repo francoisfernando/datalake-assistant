@@ -24,6 +24,7 @@ test_queries = [
     # "Which service produces sales_data?",
 ]
 
+
 async def main():
     try:
         # run_debug() requires ADK Python 1.18 or higher:
