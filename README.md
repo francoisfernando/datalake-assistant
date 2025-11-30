@@ -79,7 +79,52 @@ Unlike rule-based chatbots or static documentation, an LLM agent:
 This makes it a long-term strategic asset rather than a static tool.
 
 
-### Features to include/included
+## Setup and testing
+
+#### Create virual environment and activate it
+
+```bash
+virtualenv -p python3.12 datalake-adk-assistant
+source datalake-adk-assistant/bin/activate
+pip install -r requirements.txt
+```
+
+#### Run locally
+
+[Run your App agent with the main.py code using the following command:](https://google.github.io/adk-docs/apps/)
+
+```bash
+python3 main.py
+```
+
+## How the test dataset was created
+
+Standup a dockerized sakila postgres instance https://github.com/sakiladb/postgres
+database: `sakila`
+username / password: `sakila` / `p_ssW0rd`
+
+```bash
+docker run -p 5432:5432 -d sakiladb/postgres:latest
+```
+
+Install pg2parquet. It is a dedicated command-line tool written in Rust that queries a PostgreSQL database and writes the result to a Parquet file. 
+```bash
+cargo install pg2parquet
+```
+
+Export data to parquet
+```bash
+export PGHOST=localhost
+export PGDATABASE=sakila
+export PGUSER=sakila
+export PGTABLE=actor
+pg2parquet export --host $PGHOST --dbname $PGDATABASE --user $PGUSER --table $PGTABLE --output-file $PGTABLE.parquet
+```
+
+
+
+### Features to include/included for Kaggle Submission
+
 Features to Include in Your Agent Submission
 In your submission, you must demonstrate what you’ve learned in this course by applying at least three (3) of the key concepts listed below:
 
@@ -88,9 +133,10 @@ In your submission, you must demonstrate what you’ve learned in this course by
   - Parallel agents
   - Sequential agents
   - Loop agents
+  - Sub Agents?
 - Tools, including:
-  - MCP
-  - custom tools
+  - MCP ✅
+  - custom tools ✅
   - built-in tools, such as Google Search or Code Execution
   - OpenAPI tools
   - Long-running operations (pause/resume agents)
@@ -98,8 +144,15 @@ In your submission, you must demonstrate what you’ve learned in this course by
   - Sessions & state management (e.g. InMemorySessionService)
 - Long term memory (e.g. Memory Bank)
 - Context engineering (e.g. context compaction)
-- Observability: Logging, Tracing, Metrics
+- Observability: Logging, Tracing, Metrics ✅
 - Agent evaluation
 - A2A Protocol
 
-✅ - which are included in this submission
+✅ - features which are included in this submission
+
+
+### MCP Tools
+
+#### [Amazon Data Processing MCP Server](https://gallery.ecr.aws/awslabs-mcp/awslabs/aws-dataprocessing-mcp-server)
+
+The AWS DataProcessing MCP server provides AI code assistants with comprehensive data processing tools and real-time pipeline visibility across AWS Glue and Amazon EMR-EC2. This integration equips large language models (LLMs) with essential data engineering capabilities and contextual awareness.

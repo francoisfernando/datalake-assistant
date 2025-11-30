@@ -1,9 +1,19 @@
 from google.adk.agents.llm_agent import LlmAgent
 from google.adk.apps import App
-from agents.common_config import retry_config
 from agents.quality_agent import create_data_quality_agent
 from agents.lineage_agent import create_data_lineage_agent
+from agents.retriever_agent import create_metadata_retriever_agent
 from google.adk.tools import AgentTool
+
+
+tools = [
+    # using other agents as tools
+    AgentTool(agent=create_data_quality_agent()),
+    AgentTool(agent=create_data_lineage_agent()),
+    AgentTool(agent=create_metadata_retriever_agent()),
+]
+
+available_tools = [tool for tool in tools if tool.agent is not None]
 
 root_agent = LlmAgent(
     model="gemini-2.5-flash",
@@ -31,11 +41,7 @@ If you can't fulfill the user's request using the specialized agents, respond wi
 "I'm sorry, but I am unable to assist with that request." and explain why.
 
 """,
-    tools=[
-        # Using other agents as tools
-        AgentTool(agent=create_data_quality_agent()),
-        AgentTool(agent=create_data_lineage_agent()),
-    ],
+    tools=available_tools,
 )
 
 app = App(
@@ -44,8 +50,3 @@ app = App(
     # Optionally include App-level features:
     # plugins, context_cache_config, resumability_config
 )
-
-# - lineage_agent: Data lineage, dependencies, derivations
-# - data_quality_agent: Data quality, freshness, completeness
-# - retriever_agent: Metadata, schemas, update timestamps
-# - reasoning_agent: Complex synthesis, explanations, multi-source questions
