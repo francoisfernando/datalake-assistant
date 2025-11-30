@@ -1,7 +1,7 @@
 import asyncio
 from dotenv import load_dotenv
 from google.adk.runners import InMemoryRunner
-from agents.root_agent import app
+from agents.orchestrator_agent import app
 from logging import basicConfig, DEBUG, INFO, Logger
 from random import choice
 
