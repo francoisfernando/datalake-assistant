@@ -159,6 +159,10 @@ pg2parquet export --host $PGHOST --dbname $PGDATABASE --user $PGUSER --table $PG
 
 ### MCP Tools
 
+This project uses following MCP tools to implement some of the agents.
+
 #### [Amazon Data Processing MCP Server](https://gallery.ecr.aws/awslabs-mcp/awslabs/aws-dataprocessing-mcp-server)
 
 The AWS DataProcessing MCP server provides AI code assistants with comprehensive data processing tools and real-time pipeline visibility across AWS Glue and Amazon EMR-EC2. This integration equips large language models (LLMs) with essential data engineering capabilities and contextual awareness.
+
+Initial implementation of Retriever Agent is based on Amazon Data Processing MCP Server.
